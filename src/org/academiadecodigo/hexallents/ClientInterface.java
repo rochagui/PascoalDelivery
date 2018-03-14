@@ -2,10 +2,10 @@ package org.academiadecodigo.hexallents;
 
 import org.academiadecodigo.bootcamp.Prompt;
 import org.academiadecodigo.bootcamp.scanners.menu.MenuInputScanner;
+import org.academiadecodigo.bootcamp.scanners.string.StringInputScanner;
 
 
-import java.io.InputStream;
-import java.io.PrintStream;
+import java.io.*;
 
 /**
  * Created by codecadet on 13/03/2018.
@@ -20,25 +20,29 @@ public class ClientInterface {
     public ClientInterface(InputStream input, PrintStream out){
         prompt = new Prompt(input, out);
     }
+
     public void init() {
         String[] options = {"Superbock", "CraftBeer"};
         menuInputScanner = new MenuInputScanner(options);
         menuInputScanner.setMessage("Register or Login?");
         int answerIndex = prompt.getUserInput(menuInputScanner);
-        switch (answerIndex){
+        switch (answerIndex -1){
             case 0:
                 orderBeer(Beer.SUPERBOCK);
-                System.out.println(Beer.SUPERBOCK.getPrice());
                 break;
             case 1:
                 orderBeer(Beer.CRAFTBEER);
-                System.out.println(Beer.CRAFTBEER.getPrice());
         }
+
     }
 
-    public void orderBeer(Beer askedBeer){
+    public Beer orderBeer(Beer askedBeer){
         courier = new Courier();
-        this.beer = courier.getBeer(askedBeer);
+        return this.beer = courier.getBeer(askedBeer);
+    }
+
+    public int showPrice(){
+        return orderBeer(this.beer).getPrice();
     }
 }
 

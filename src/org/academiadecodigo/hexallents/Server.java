@@ -2,7 +2,7 @@ package org.academiadecodigo.hexallents;
 
 import java.io.IOException;
 import java.io.PrintStream;
-import java.net.InetAddress;
+import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -16,7 +16,6 @@ public class Server {
     private ClientInterface clientInterface;
 
     public Server() {
-
         try {
             serverSocket = new ServerSocket(portNumber);
             socket = serverSocket.accept();
@@ -25,13 +24,21 @@ public class Server {
         }
     }
 
-    public void showMenu(){
+    public void showMenu() {
         try {
             PrintStream printStream = new PrintStream(socket.getOutputStream());
             clientInterface = new ClientInterface(socket.getInputStream(), printStream);
             clientInterface.init();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        catch (IOException e){
+    }
+
+    public void showPrices() {
+        try {
+            PrintWriter printWriter = new PrintWriter(socket.getOutputStream(), true);
+            printWriter.println(Integer.toString(clientInterface.showPrice()) + " euritos");
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
