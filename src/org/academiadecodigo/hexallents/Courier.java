@@ -1,14 +1,15 @@
 package org.academiadecodigo.hexallents;
 
+import org.academiadecodigo.hexallents.model.ItemType;
+
 /**
  * Created by codecadet on 13/03/2018.
  */
 public class Courier {
 
-    private Beer beer;
+    private ItemType item;
 
-    public Beer getBeer(Beer askedBeer){
-        return askedBeer;
+    public ItemType getItem(ItemType item) {
+        return item;
     }
-
 }
