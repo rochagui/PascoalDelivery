@@ -1,7 +1,9 @@
-package org.academiadecodigo.hexallents;
+package org.academiadecodigo.hexallents.view;
 
 import org.academiadecodigo.bootcamp.Prompt;
 import org.academiadecodigo.bootcamp.scanners.menu.MenuInputScanner;
+import org.academiadecodigo.hexallents.services.OrderService;
+import org.academiadecodigo.hexallents.controllers.MenuController;
 
 import java.io.InputStream;
 import java.io.PrintStream;
@@ -28,7 +30,7 @@ public class MenuView implements View {
     }
 
     public Beer orderBeer(Beer askedBeer) {
-        Courier courier = new Courier();
+        OrderService courier = new OrderService();
         return this.beer = courier.getBeer(askedBeer);
     }
 

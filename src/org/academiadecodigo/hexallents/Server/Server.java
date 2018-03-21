@@ -1,6 +1,6 @@
 package org.academiadecodigo.hexallents.Server;
 
-import org.academiadecodigo.hexallents.MenuController;
+import org.academiadecodigo.hexallents.controllers.MenuController;
 
 import java.io.*;
 import java.net.ServerSocket;

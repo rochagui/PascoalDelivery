@@ -1,5 +1,6 @@
-package org.academiadecodigo.hexallents;
+package org.academiadecodigo.hexallents.controllers;
 
+import org.academiadecodigo.hexallents.view.MenuView;
 import org.academiadecodigo.hexallents.model.ItemType;
 
 import java.io.InputStream;
@@ -7,7 +8,7 @@ import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MenuController implements Controller {
+public class MenuController extends AbstractController {
 
     private MenuView menuView;
     private Map<Integer,Controller> map = new HashMap<>();
