@@ -1,6 +1,6 @@
 package org.academiadecodigo.hexallents.controllers;
 
-import org.academiadecodigo.hexallents.services.AbstractService;
+
 import org.academiadecodigo.hexallents.view.View;
 
 public abstract class AbstractController implements Controller{

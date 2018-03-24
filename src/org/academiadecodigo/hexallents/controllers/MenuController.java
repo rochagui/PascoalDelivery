@@ -1,7 +1,8 @@
 package org.academiadecodigo.hexallents.controllers;
 
 import org.academiadecodigo.hexallents.view.MenuView;
-import org.academiadecodigo.hexallents.model.ItemType;
+import org.academiadecodigo.hexallents.view.Messages;
+import org.academiadecodigo.hexallents.view.UserOptions;
 
 import java.io.InputStream;
 import java.io.PrintStream;
@@ -21,10 +22,18 @@ public class MenuController extends AbstractController {
 
     }
 
-    public void mainMenu(int answerIndex) {
-    }
+    public void onMenuSelection(int option) {
 
-    public void setMap() {
-        map.put(1,ItemType.SUPERBOCK);
+        if (option == UserOptions.QUIT.getOption()) {
+            return;
+        }
+
+        if (!map.containsKey(option)) {
+            throw new IllegalStateException(Messages.SYSTEM_ERROR);
+        }
+
+        controllerMap.get(option).init();
+        init();
     }
+}
 }
