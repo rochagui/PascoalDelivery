@@ -9,19 +9,19 @@ public enum UserOptions {
 
     CHECK_STATUS(2, Messages.CHECK_STATUS),
 
-    QUIT(3, Messages.CHOOSE_ITEM);
+    QUIT(3, Messages.QUIT);
 
-    UserOptions(int option, String message) {
-        this.option = option;
+    UserOptions(int answerIndex, String message) {
+        this.answerIndex = answerIndex;
         this.message = message;
 
     }
 
-    private int option;
+    private int answerIndex;
     private String message;
 
-    public int getOption() {
-        return option;
+    public int getAnswerIndex() {
+        return answerIndex;
     }
 
     public String getMessage() {
@@ -38,7 +38,7 @@ public enum UserOptions {
         String[] messages = new String[values().length];
 
         for (UserOptions option : values()) {
-            messages[option.getOption() - 1] = option.getMessage();
+            messages[option.getAnswerIndex() - 1] = option.getMessage();
         }
 
         return messages;

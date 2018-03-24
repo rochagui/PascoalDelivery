@@ -1,5 +1,6 @@
 package org.academiadecodigo.hexallents.Server;
 
+import org.academiadecodigo.hexallents.BootStrap;
 import org.academiadecodigo.hexallents.controllers.MenuController;
 
 import java.io.*;
@@ -28,6 +29,7 @@ public class Server {
             }
 
             Server chatServer = new Server();
+
             chatServer.start(port);
 
         } catch (NumberFormatException ex) {
@@ -63,11 +65,19 @@ public class Server {
 
                     connectionCount++;
                     String name = "Client-" + connectionCount;
-                    ServerWorker worker = new ServerWorker(name, clientSocket);
+
+                    ServerWorker worker = new ServerWorker();
+                    BootStrap bootStrap = new BootStrap();
+
+                    worker.setInputStream(clientSocket.getInputStream());
+                    worker.setPrintStream(new PrintStream(clientSocket.getOutputStream()));
+                    worker.setBootStrap(bootStrap);
+                    bootStrap.setServerWorker(worker);
+
                     workers.add(worker);
 
-
                     Thread thread = new Thread(worker);
+
                     thread.setName(name);
                     thread.start();
 
@@ -83,23 +93,4 @@ public class Server {
 
     }
 
-    private class ServerWorker implements Runnable {
-
-        final private String name;
-        private MenuController menuController;
-
-
-        public ServerWorker(String name, Socket clientSocket) throws IOException {
-
-            this.name = name;
-            PrintStream printStream = new PrintStream(clientSocket.getOutputStream());
-            menuController = new MenuController(clientSocket.getInputStream(), printStream);
-        }
-
-        @Override
-        public void run() {
-            menuController.init();
-        }
-
-    }
 }

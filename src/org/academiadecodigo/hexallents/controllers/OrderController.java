@@ -1,24 +1,30 @@
 package org.academiadecodigo.hexallents.controllers;
 
+import org.academiadecodigo.hexallents.model.ItemType;
 import org.academiadecodigo.hexallents.services.OrderService;
-import org.academiadecodigo.hexallents.view.OrderView;
 
-public class OrderController implements Controller {
+public class OrderController extends AbstractController {
 
-    private OrderView orderView;
     private OrderService orderService;
+    private MenuController menuController;
+
 
 
     public void setOrderService(OrderService orderService) {
         this.orderService = orderService;
     }
 
-    public void setOrderView(OrderView orderView) {
-        this.orderView = orderView;
+    public void setMenuController(MenuController menuController) {
+        this.menuController = menuController;
     }
 
-    @Override
-    public void init() {
+    public void userOptionOrder(int answerIndex, int amount) {
+        init();
         orderService.addOrder();
+        if(answerIndex == ItemType.BACK.ordinal()+1){
+            menuController.init();
+        }
+        orderService.placeItem(amount, ItemType.values()[answerIndex-1]);
+
     }
 }

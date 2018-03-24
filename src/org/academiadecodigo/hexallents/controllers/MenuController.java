@@ -1,30 +1,22 @@
 package org.academiadecodigo.hexallents.controllers;
 
-import org.academiadecodigo.hexallents.view.MenuView;
 import org.academiadecodigo.hexallents.view.Messages;
 import org.academiadecodigo.hexallents.view.UserOptions;
 
-import java.io.InputStream;
-import java.io.PrintStream;
-import java.util.HashMap;
 import java.util.Map;
 
 public class MenuController extends AbstractController {
 
-    private MenuView menuView;
-    private Map<Integer,Controller> map = new HashMap<>();
+    private Map<Integer, Controller> map;
 
-    public MenuController(InputStream input, PrintStream out){
-        menuView = new MenuView(input, out,this);
+    public void setMap(Map<Integer, Controller> map) {
+        this.map = map;
     }
-    @Override
-    public void init() {
 
-    }
 
     public void onMenuSelection(int option) {
 
-        if (option == UserOptions.QUIT.getOption()) {
+        if (option == UserOptions.QUIT.getAnswerIndex()) {
             return;
         }
 
@@ -32,8 +24,7 @@ public class MenuController extends AbstractController {
             throw new IllegalStateException(Messages.SYSTEM_ERROR);
         }
 
-        controllerMap.get(option).init();
-        init();
+        map.get(option).init();
     }
-}
+
 }
