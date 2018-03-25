@@ -1,42 +1,29 @@
 package org.academiadecodigo.hexallents.services;
 
-import org.academiadecodigo.hexallents.model.Delivery;
 import org.academiadecodigo.hexallents.model.Order;
 
-import java.util.Timer;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+public class DeliveryService implements Runnable {
 
-public class DeliveryService {
-
-    private Delivery delivery;
+    private final BQueue<Order> queue;
     private OrderService orderService;
-
-    public DeliveryService(){
-        this.delivery = new Delivery();
-    }
+    private Order order;
+    private int elementNumber;
 
     public void setOrderService(OrderService orderService) {
         this.orderService = orderService;
+        this.elementNumber = orderService.
     }
 
-    //private ExecutorService executorService = Executors.newFixedThreadPool(3);
+    public DeliveryService(BQueue bQueue){
+        this.queue = bQueue;
+    }
 
-
-
-    /*public String deliver(){
-        try {
-            wait(30000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+    @Override
+    public void run() {
+        while (elementNumber>0){
+            order = queue.poll();
+            --this.elementNumber;
+            System.out.println(elementNumber);
         }
-        return "";
-    }*/
-
-
-    public void addOrder(Order order){
-        delivery.addOrder(order);
-        System.out.println("please workg");
     }
-
 }

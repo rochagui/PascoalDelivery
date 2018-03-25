@@ -6,7 +6,8 @@ import org.academiadecodigo.hexallents.controllers.CheckStatusController;
 import org.academiadecodigo.hexallents.controllers.Controller;
 import org.academiadecodigo.hexallents.controllers.MenuController;
 import org.academiadecodigo.hexallents.controllers.OrderController;
-import org.academiadecodigo.hexallents.model.Delivery;
+import org.academiadecodigo.hexallents.model.Order;
+import org.academiadecodigo.hexallents.services.BQueue;
 import org.academiadecodigo.hexallents.services.DeliveryService;
 import org.academiadecodigo.hexallents.services.OrderService;
 import org.academiadecodigo.hexallents.view.MenuView;
@@ -35,16 +36,19 @@ public class BootStrap {
         OrderController orderController = new OrderController();
         OrderView orderView = new OrderView();
         orderView.setMenuController(menuController);
-        orderService = new OrderService();
+        BQueue<Order> queue = new BQueue<>(3);
+        orderService = new OrderService(queue);
         CheckStatusController checkStatusController = new CheckStatusController();
-        DeliveryService deliveryService = new DeliveryService();
+        DeliveryService deliveryService = new DeliveryService(queue);
         deliveryService.setOrderService(orderService);
 
+        Thread thread = new Thread(orderService);
+        Thread thread1 = new Thread(deliveryService);
+        thread.start();
+        thread1.start();
         menuController.setView(menuView);
-
         menuView.setMenuController(menuController);
         menuView.setPrompt(prompt);
-
         orderController.setView(orderView);
         orderController.setOrderService(orderService);
         orderController.setMenuController(menuController);
@@ -63,5 +67,4 @@ public class BootStrap {
         return menuController;
 
     }
-
 }
