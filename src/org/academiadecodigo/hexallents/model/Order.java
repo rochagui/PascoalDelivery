@@ -1,6 +1,5 @@
 package org.academiadecodigo.hexallents.model;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,12 +13,9 @@ public class Order {
     }
 
     public void placeItem(int amount, ItemType itemType) {
-
         orderList.put(itemType, amount);
-        if (orderList.containsKey(itemType)){
-            orderList.put(itemType, amount + orderList.get(itemType));
-        }
     }
+
 
     public void removeAmountItem(int amount, ItemType itemType) {
         if (amount == 0) {

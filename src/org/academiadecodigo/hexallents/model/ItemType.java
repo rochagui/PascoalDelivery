@@ -8,10 +8,7 @@ public enum ItemType {
     SUPERBOCK("Superbock", 1.59),
     CRAFTBEER("CraftBeer", 3.50),
     SAGRES("Sagres", 1.30),
-    FRITAS_LISAS_AMANHECER("Batatas Fritas Amanhecer", 0.8),
-    CHECKOUT("Proceed to checkout",0),
-    BACK("Back to main menu", 0);
-
+    FRITAS_LISAS_AMANHECER("Batatas Fritas Amanhecer", 0.8);
 
     double price;
     String itemName;

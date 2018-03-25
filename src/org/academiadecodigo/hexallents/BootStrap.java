@@ -31,7 +31,7 @@ public class BootStrap {
         MenuView menuView = new MenuView();
         OrderController orderController = new OrderController();
         OrderView orderView = new OrderView();
-
+        orderView.setMenuController(menuController);
         OrderService orderService = new OrderService();
         CheckStatusController checkStatusController = new CheckStatusController();
 

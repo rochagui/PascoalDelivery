@@ -40,18 +40,19 @@ public class OrderService {
     }
 
     public String orderList() {
+
         Set<ItemType> set = order.getOrderList().keySet();
 
         StringBuilder message = new StringBuilder();
         for (ItemType itemType : set) {
 
-            for (Integer amount : order.getOrderList().values())
+            for (Integer amount : order.getOrderList().values()) {
 
                 if (order.getOrderList().get(itemType) == amount) {
 
                     price = itemType.getPrice() * amount;
 
-                    finalPrice =+ price;
+                    finalPrice = +price;
 
                     itemName = itemType.getItemName();
 
@@ -59,6 +60,7 @@ public class OrderService {
                 }
 
 
+            }
         }
         return message.toString().concat(" " + "Final price" + Double.toString(finalPrice));
     }
