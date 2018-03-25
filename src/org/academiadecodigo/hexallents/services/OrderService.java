@@ -1,6 +1,5 @@
 package org.academiadecodigo.hexallents.services;
 
-import org.academiadecodigo.hexallents.controllers.OrderController;
 import org.academiadecodigo.hexallents.model.ItemType;
 import org.academiadecodigo.hexallents.model.Order;
 
@@ -11,12 +10,6 @@ import java.util.Set;
  */
 public class OrderService implements Runnable {
 
-
-<<<<<<< HEAD
-    private OrderController orderController;
-=======
-    private Delivery delivery;
->>>>>>> 07e86d7403182673e5ab76e238baf28ce8a21469
     private Order order;
     private double finalPrice;
     private double price;
@@ -24,31 +17,20 @@ public class OrderService implements Runnable {
     private int elementNum;
 
 
-<<<<<<< HEAD
     public OrderService(BQueue queue) {
         this.queue = queue;
     }
 
-    public int getElementNum(){
+    public int getElementNum() {
         return elementNum;
     }
 
     public void addOrder() {
-=======
-    public synchronized void addOrder() {
->>>>>>> 07e86d7403182673e5ab76e238baf28ce8a21469
+
         order = new Order();
         elementNum++;
     }
 
-<<<<<<< HEAD
-    public void setOrderController(OrderController orderController) {
-        this.orderController = orderController;
-=======
-    public void setDelivery(Delivery delivery) {
-        this.delivery = delivery;
->>>>>>> 07e86d7403182673e5ab76e238baf28ce8a21469
-    }
 
     public double buy(ItemType itemType, int amount) {
         return order.buy(itemType, amount);
@@ -73,7 +55,7 @@ public class OrderService implements Runnable {
         return message.toString().concat(" " + "Final price " + Double.toString(finalPrice));
     }
 
-<<<<<<< HEAD
+
     public Order getOrder() {
         return order;
     }
@@ -82,7 +64,7 @@ public class OrderService implements Runnable {
     @Override
     public void run() {
 
-        while (elementNum>0) {
+        while (elementNum > 0) {
             synchronized (queue) {
                 System.out.println("Thread" + Thread.currentThread().getName() + "stuff");
             }
@@ -100,20 +82,7 @@ public class OrderService implements Runnable {
                 e.printStackTrace();
             }
         }
-=======
-    public void deliver() {
-        delivery.addOrder(order);
-        delivery.deliver();
-    }
-
-    public int checkStatus() {
-        if (delivery.isDelivered()) {
-            return 0;
-        }
-        return delivery.checkQueue(order);
->>>>>>> 07e86d7403182673e5ab76e238baf28ce8a21469
     }
 }
-
 
 
