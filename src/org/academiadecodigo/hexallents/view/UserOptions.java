@@ -14,7 +14,6 @@ public enum UserOptions {
     UserOptions(int answerIndex, String message) {
         this.answerIndex = answerIndex;
         this.message = message;
-
     }
 
     private int answerIndex;

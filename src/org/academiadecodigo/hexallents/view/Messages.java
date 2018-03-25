@@ -10,7 +10,7 @@ public class Messages {
     public static final String MAKE_ORDER = "Start your order here";
 
     public final static String CHOOSE_ITEM = "Select your items. If you want to remove a specific item" +
-            "of your order, write a negative number to remove, and 0 to remove it.";
+            " of your order, write a negative number to remove, and 0 to remove it.";
 
     public final static String SHOW_PRICE = "";
 

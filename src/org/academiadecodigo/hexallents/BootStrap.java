@@ -11,6 +11,7 @@ import org.academiadecodigo.hexallents.view.MenuView;
 import org.academiadecodigo.hexallents.view.OrderView;
 import org.academiadecodigo.hexallents.view.UserOptions;
 
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,10 +26,12 @@ public class BootStrap {
 
 
         Prompt prompt = new Prompt(serverWorker.getInputStream(), serverWorker.getPrintStream());
+        PrintWriter printWriter = new PrintWriter(serverWorker.getPrintStream(), true);
         MenuController menuController = new MenuController();
         MenuView menuView = new MenuView();
         OrderController orderController = new OrderController();
         OrderView orderView = new OrderView();
+
         OrderService orderService = new OrderService();
         CheckStatusController checkStatusController = new CheckStatusController();
 
@@ -42,22 +45,16 @@ public class BootStrap {
         orderController.setOrderService(orderService);
         orderController.setMenuController(menuController);
         orderService.setOrderController(orderController);
-
         orderView.setPrompt(prompt);
+        orderView.setPrintWriter(printWriter);
         orderView.setOrderController(orderController);
 
         Map<Integer, Controller> controllerMap = new HashMap<>();
         controllerMap.put(UserOptions.MAKE_ORDER.getAnswerIndex(), orderController);
         controllerMap.put(UserOptions.CHECK_STATUS.getAnswerIndex(), checkStatusController);
-        controllerMap.put(UserOptions.QUIT.getAnswerIndex(), new Controller() {
-            @Override
-            public void init() {
-                System.exit(1);
-            }
-        });
+
 
         menuController.setMap(controllerMap);
-
 
         return menuController;
 

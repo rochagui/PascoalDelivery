@@ -9,6 +9,7 @@ public class MenuView extends AbstractView {
 
     private Prompt prompt;
     private MenuController menuController;
+    private MenuInputScanner menuInputScanner1;
 
 
     @Override
@@ -24,10 +25,10 @@ public class MenuView extends AbstractView {
     public void show() {
         String[] options = UserOptions.getMessages();
 
-        MenuInputScanner menuInputScanner = new MenuInputScanner(options);
-        menuInputScanner.setMessage(Messages.WELCOME_MESSAGE);
+        menuInputScanner1 = new MenuInputScanner(options);
+        menuInputScanner1.setMessage(Messages.WELCOME_MESSAGE);
 
-        int answerIndex = prompt.getUserInput(menuInputScanner);
+        int answerIndex = prompt.getUserInput(menuInputScanner1);
 
         menuController.onMenuSelection(answerIndex);
 

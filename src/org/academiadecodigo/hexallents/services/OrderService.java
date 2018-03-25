@@ -4,21 +4,23 @@ import org.academiadecodigo.hexallents.controllers.OrderController;
 import org.academiadecodigo.hexallents.model.ItemType;
 import org.academiadecodigo.hexallents.model.Order;
 
-import java.util.HashSet;
 import java.util.Queue;
 import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.concurrent.ExecutorService;
 
 /**
  * Created by codecadet on 13/03/2018.
  */
 public class OrderService {
 
-    private ExecutorService executorService;
+
     private OrderController orderController;
     private Queue<Order> queue;
     private Order order;
+    private double finalPrice;
+    private double price;
+    private String itemName;
+
 
     public OrderService() {
         queue = new ConcurrentLinkedQueue<>();
@@ -34,22 +36,30 @@ public class OrderService {
     }
 
     public void placeItem(int amount, ItemType itemType) {
-        if (amount < 0) {
-            order.removeAmountItem(amount, itemType);
-        }
         order.placeItem(amount, itemType);
-        orderList();
     }
 
     public String orderList() {
         Set<ItemType> set = order.getOrderList().keySet();
+
         StringBuilder message = new StringBuilder();
-        for (Integer amount : order.getOrderList().values()) {
-            for (ItemType itemType : set) {
-                double finalPrice = itemType.getPrice() * amount;
-                message.append(itemType.getItemName() + finalPrice +"\n");
-            }
+        for (ItemType itemType : set) {
+
+            for (Integer amount : order.getOrderList().values())
+
+                if (order.getOrderList().get(itemType) == amount) {
+
+                    price = itemType.getPrice() * amount;
+
+                    finalPrice =+ price;
+
+                    itemName = itemType.getItemName();
+
+                    message.append(itemName + " " + price + "\n");
+                }
+
+
         }
-        return message.toString();
+        return message.toString().concat(" " + "Final price" + Double.toString(finalPrice));
     }
 }
