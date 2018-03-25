@@ -1,6 +1,7 @@
 package org.academiadecodigo.hexallents.services;
 
 import org.academiadecodigo.hexallents.controllers.OrderController;
+import org.academiadecodigo.hexallents.model.Delivery;
 import org.academiadecodigo.hexallents.model.ItemType;
 import org.academiadecodigo.hexallents.model.Order;
 
@@ -14,22 +15,19 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 public class OrderService {
 
 
-    private OrderController orderController;
-
+    private Delivery delivery;
     private Order order;
     private double finalPrice;
-    private String itemName;
     private double price;
 
 
-    public void setOrderController(OrderController orderController) {
-        this.orderController = orderController;
-    }
-
-    public void addOrder() {
+    public synchronized void addOrder() {
         order = new Order();
     }
 
+    public void setDelivery(Delivery delivery) {
+        this.delivery = delivery;
+    }
 
     public double buy(ItemType itemType, int amount) {
         return order.buy(itemType, amount);
@@ -44,13 +42,25 @@ public class OrderService {
 
             price = buy(itemType, amount);
 
-            itemName = itemType.getItemName();
+            String itemName = itemType.getItemName();
 
-            message.append( itemName + " " + itemType.getPrice() + "\n");
+            message.append(itemName + " " + itemType.getPrice() + "\n");
         }
 
         finalPrice += price;
 
         return message.toString().concat(" " + "Final price " + Double.toString(finalPrice));
+    }
+
+    public void deliver() {
+        delivery.addOrder(order);
+        delivery.deliver();
+    }
+
+    public int checkStatus() {
+        if (delivery.isDelivered()) {
+            return 0;
+        }
+        return delivery.checkQueue(order);
     }
 }

@@ -2,6 +2,7 @@ package org.academiadecodigo.hexallents.view;
 
 import org.academiadecodigo.bootcamp.scanners.integer.IntegerInputScanner;
 import org.academiadecodigo.bootcamp.scanners.menu.MenuInputScanner;
+import org.academiadecodigo.hexallents.controllers.CheckStatusController;
 import org.academiadecodigo.hexallents.controllers.MenuController;
 import org.academiadecodigo.hexallents.controllers.OrderController;
 import org.academiadecodigo.hexallents.model.ItemType;
@@ -14,6 +15,7 @@ public class OrderView extends AbstractView {
 
     private OrderController orderController;
     private PrintWriter printWriter;
+    private CheckStatusController checkStatusController;
 
     private MenuController menuController;
 
@@ -29,6 +31,10 @@ public class OrderView extends AbstractView {
 
     public void setOrderController(OrderController orderController) {
         this.orderController = orderController;
+    }
+
+    public void setCheckStatusController(CheckStatusController checkStatusController) {
+        this.checkStatusController = checkStatusController;
     }
 
     @Override
@@ -54,8 +60,7 @@ public class OrderView extends AbstractView {
 
         if (answerIndex == LeaveOptions.CHECKOUT.getUserOptions()){
             printWriter.println(orderController.getOrderList());
-            menuController.init();
-            show();
+            checkStatusController.init();
         }
 
         if (options[answerIndex - 1] == ItemType.getItemNames()[answerIndex - 1]) {

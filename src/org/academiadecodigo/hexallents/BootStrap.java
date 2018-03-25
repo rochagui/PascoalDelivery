@@ -7,22 +7,28 @@ import org.academiadecodigo.hexallents.controllers.Controller;
 import org.academiadecodigo.hexallents.controllers.MenuController;
 import org.academiadecodigo.hexallents.controllers.OrderController;
 import org.academiadecodigo.hexallents.model.Delivery;
-import org.academiadecodigo.hexallents.services.DeliveryService;
 import org.academiadecodigo.hexallents.services.OrderService;
+import org.academiadecodigo.hexallents.view.CheckStatusView;
 import org.academiadecodigo.hexallents.view.MenuView;
 import org.academiadecodigo.hexallents.view.OrderView;
 import org.academiadecodigo.hexallents.view.UserOptions;
 
+import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.Socket;
 import java.util.HashMap;
 import java.util.Map;
 
 public class BootStrap {
     private ServerWorker serverWorker;
-    private OrderService orderService;
+    private Socket socket;
 
     public void setServerWorker(ServerWorker serverWorker) {
         this.serverWorker = serverWorker;
+    }
+
+    public void setSocket(Socket socket) {
+        this.socket = socket;
     }
 
     public Controller wireObjects() {
@@ -35,28 +41,43 @@ public class BootStrap {
         OrderController orderController = new OrderController();
         OrderView orderView = new OrderView();
         orderView.setMenuController(menuController);
-        orderService = new OrderService();
+        OrderService orderService = new OrderService();
         CheckStatusController checkStatusController = new CheckStatusController();
-        DeliveryService deliveryService = new DeliveryService();
-        deliveryService.setOrderService(orderService);
+        Delivery delivery = new Delivery();
+        CheckStatusView checkStatusView = new CheckStatusView();
 
+
+        orderService.setDelivery(delivery);
+        checkStatusView.setCheckStatusController(checkStatusController);
+        checkStatusView.setPrintWriter(printWriter);
+        checkStatusController.setOrderService(orderService);
+        checkStatusController.setMenuController(menuController);
+        checkStatusController.setView(checkStatusView);
+        checkStatusView.setMenuController(menuController);
         menuController.setView(menuView);
-
         menuView.setMenuController(menuController);
         menuView.setPrompt(prompt);
-
         orderController.setView(orderView);
         orderController.setOrderService(orderService);
         orderController.setMenuController(menuController);
-        orderService.setOrderController(orderController);
         orderView.setPrompt(prompt);
         orderView.setPrintWriter(printWriter);
         orderView.setOrderController(orderController);
+        orderView.setCheckStatusController(checkStatusController);
 
         Map<Integer, Controller> controllerMap = new HashMap<>();
         controllerMap.put(UserOptions.MAKE_ORDER.getAnswerIndex(), orderController);
         controllerMap.put(UserOptions.CHECK_STATUS.getAnswerIndex(), checkStatusController);
-
+        controllerMap.put(UserOptions.QUIT.getAnswerIndex(), new Controller() {
+            @Override
+            public void init() {
+                try {
+                    socket.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
 
         menuController.setMap(controllerMap);
 
