@@ -20,18 +20,20 @@ public class OrderController extends AbstractController {
     }
 
     @Override
-    public void init()
-    {
+    public void init() {
         orderService.addOrder();
         super.init();
     }
 
     public void userOptionOrder(int answerIndex, int amount) {
-        orderService.buy(ItemType.values()[answerIndex],amount);
+        orderService.buy(ItemType.values()[answerIndex], amount);
         orderList = orderService.orderList(amount);
     }
 
     public String getOrderList() {
+
         return orderList;
     }
+
+
 }

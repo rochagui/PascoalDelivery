@@ -1,8 +1,6 @@
 package org.academiadecodigo.hexallents.Server;
 
 import org.academiadecodigo.hexallents.BootStrap;
-import org.academiadecodigo.hexallents.controllers.MenuController;
-import org.academiadecodigo.hexallents.services.DeliveryService;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -17,6 +15,7 @@ import java.util.List;
 public class Server {
     private BootStrap bootStrap = new BootStrap();
     private ServerSocket serverSocket;
+    private Socket clientSocket;
     public final static int DEFAULT_PORT = 6666;
     private List<ServerWorker> workers = Collections.synchronizedList(new ArrayList<ServerWorker>());
 
@@ -60,7 +59,7 @@ public class Server {
             while (true) {
 
                 // Block waiting for client connections
-                Socket clientSocket = serverSocket.accept();
+                clientSocket = serverSocket.accept();
                 System.out.println("Client accepted: " + clientSocket);
 
                 try {
@@ -74,7 +73,7 @@ public class Server {
                     worker.setPrintStream(new PrintStream(clientSocket.getOutputStream()));
                     worker.setBootStrap(bootStrap);
                     bootStrap.setServerWorker(worker);
-
+                    bootStrap.setSocket(clientSocket);
                     workers.add(worker);
 
                     Thread thread = new Thread(worker);
@@ -94,5 +93,6 @@ public class Server {
 
 
     }
+
 
 }

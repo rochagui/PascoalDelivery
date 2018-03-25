@@ -12,15 +12,19 @@ import java.util.Set;
 public class OrderService implements Runnable {
 
 
+<<<<<<< HEAD
     private OrderController orderController;
+=======
+    private Delivery delivery;
+>>>>>>> 07e86d7403182673e5ab76e238baf28ce8a21469
     private Order order;
     private double finalPrice;
-    private String itemName;
     private double price;
     private BQueue<Order> queue;
     private int elementNum;
 
 
+<<<<<<< HEAD
     public OrderService(BQueue queue) {
         this.queue = queue;
     }
@@ -30,12 +34,20 @@ public class OrderService implements Runnable {
     }
 
     public void addOrder() {
+=======
+    public synchronized void addOrder() {
+>>>>>>> 07e86d7403182673e5ab76e238baf28ce8a21469
         order = new Order();
         elementNum++;
     }
 
+<<<<<<< HEAD
     public void setOrderController(OrderController orderController) {
         this.orderController = orderController;
+=======
+    public void setDelivery(Delivery delivery) {
+        this.delivery = delivery;
+>>>>>>> 07e86d7403182673e5ab76e238baf28ce8a21469
     }
 
     public double buy(ItemType itemType, int amount) {
@@ -51,7 +63,7 @@ public class OrderService implements Runnable {
 
             price = buy(itemType, amount);
 
-            itemName = itemType.getItemName();
+            String itemName = itemType.getItemName();
 
             message.append(itemName + " " + itemType.getPrice() + "\n");
         }
@@ -61,6 +73,7 @@ public class OrderService implements Runnable {
         return message.toString().concat(" " + "Final price " + Double.toString(finalPrice));
     }
 
+<<<<<<< HEAD
     public Order getOrder() {
         return order;
     }
@@ -87,6 +100,18 @@ public class OrderService implements Runnable {
                 e.printStackTrace();
             }
         }
+=======
+    public void deliver() {
+        delivery.addOrder(order);
+        delivery.deliver();
+    }
+
+    public int checkStatus() {
+        if (delivery.isDelivered()) {
+            return 0;
+        }
+        return delivery.checkQueue(order);
+>>>>>>> 07e86d7403182673e5ab76e238baf28ce8a21469
     }
 }
 

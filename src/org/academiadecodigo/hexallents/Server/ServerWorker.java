@@ -42,4 +42,7 @@ public class ServerWorker implements Runnable {
         bootStrap.wireObjects().init();
     }
 
+    public void closeConnection() {
+
+    }
 }
