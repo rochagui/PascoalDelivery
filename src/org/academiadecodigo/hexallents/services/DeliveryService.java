@@ -11,7 +11,7 @@ public class DeliveryService implements Runnable {
 
     public void setOrderService(OrderService orderService) {
         this.orderService = orderService;
-        this.elementNumber = orderService.
+        this.elementNumber = orderService.getElementNum();
     }
 
     public DeliveryService(BQueue bQueue){

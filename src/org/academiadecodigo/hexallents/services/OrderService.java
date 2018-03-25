@@ -25,7 +25,7 @@ public class OrderService implements Runnable {
         this.queue = queue;
     }
 
-    private int getElementNum(){
+    public int getElementNum(){
         return elementNum;
     }
 
