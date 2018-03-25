@@ -5,7 +5,6 @@ import org.academiadecodigo.bootcamp.scanners.menu.MenuInputScanner;
 import org.academiadecodigo.hexallents.controllers.MenuController;
 import org.academiadecodigo.hexallents.controllers.OrderController;
 import org.academiadecodigo.hexallents.model.ItemType;
-import org.academiadecodigo.hexallents.model.LeaveOptions;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;

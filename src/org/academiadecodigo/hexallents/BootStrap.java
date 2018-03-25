@@ -6,6 +6,8 @@ import org.academiadecodigo.hexallents.controllers.CheckStatusController;
 import org.academiadecodigo.hexallents.controllers.Controller;
 import org.academiadecodigo.hexallents.controllers.MenuController;
 import org.academiadecodigo.hexallents.controllers.OrderController;
+import org.academiadecodigo.hexallents.model.Delivery;
+import org.academiadecodigo.hexallents.services.DeliveryService;
 import org.academiadecodigo.hexallents.services.OrderService;
 import org.academiadecodigo.hexallents.view.MenuView;
 import org.academiadecodigo.hexallents.view.OrderView;
@@ -17,6 +19,7 @@ import java.util.Map;
 
 public class BootStrap {
     private ServerWorker serverWorker;
+    private OrderService orderService;
 
     public void setServerWorker(ServerWorker serverWorker) {
         this.serverWorker = serverWorker;
@@ -32,9 +35,10 @@ public class BootStrap {
         OrderController orderController = new OrderController();
         OrderView orderView = new OrderView();
         orderView.setMenuController(menuController);
-        OrderService orderService = new OrderService();
+        orderService = new OrderService();
         CheckStatusController checkStatusController = new CheckStatusController();
-
+        DeliveryService deliveryService = new DeliveryService();
+        deliveryService.setOrderService(orderService);
 
         menuController.setView(menuView);
 
@@ -59,4 +63,5 @@ public class BootStrap {
         return menuController;
 
     }
+
 }

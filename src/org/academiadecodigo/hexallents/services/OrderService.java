@@ -15,16 +15,12 @@ public class OrderService {
 
 
     private OrderController orderController;
-    private Queue<Order> queue;
+
     private Order order;
     private double finalPrice;
     private String itemName;
     private double price;
 
-
-    public OrderService() {
-        queue = new ConcurrentLinkedQueue<>();
-    }
 
     public void setOrderController(OrderController orderController) {
         this.orderController = orderController;
@@ -32,7 +28,6 @@ public class OrderService {
 
     public void addOrder() {
         order = new Order();
-        queue.add(order);
     }
 
 

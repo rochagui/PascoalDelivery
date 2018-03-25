@@ -2,6 +2,7 @@ package org.academiadecodigo.hexallents.Server;
 
 import org.academiadecodigo.hexallents.BootStrap;
 import org.academiadecodigo.hexallents.controllers.MenuController;
+import org.academiadecodigo.hexallents.services.DeliveryService;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -14,6 +15,7 @@ import java.util.List;
  * Created by codecadet on 13/03/2018.
  */
 public class Server {
+    private BootStrap bootStrap = new BootStrap();
     private ServerSocket serverSocket;
     public final static int DEFAULT_PORT = 6666;
     private List<ServerWorker> workers = Collections.synchronizedList(new ArrayList<ServerWorker>());
@@ -67,7 +69,6 @@ public class Server {
                     String name = "Client-" + connectionCount;
 
                     ServerWorker worker = new ServerWorker();
-                    BootStrap bootStrap = new BootStrap();
 
                     worker.setInputStream(clientSocket.getInputStream());
                     worker.setPrintStream(new PrintStream(clientSocket.getOutputStream()));
@@ -90,6 +91,7 @@ public class Server {
         } catch (IOException e) {
             System.out.println("Unable to start server on port " + port);
         }
+
 
     }
 
