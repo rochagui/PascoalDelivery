@@ -9,6 +9,7 @@ public class OrderController extends AbstractController {
 
     private OrderService orderService;
     private MenuController menuController;
+    private String orderList;
 
     public void setOrderService(OrderService orderService) {
         this.orderService = orderService;
@@ -26,10 +27,11 @@ public class OrderController extends AbstractController {
     }
 
     public void userOptionOrder(int answerIndex, int amount) {
-        orderService.placeItem(amount, ItemType.values()[answerIndex]);
+        orderService.buy(ItemType.values()[answerIndex],amount);
+        orderList = orderService.orderList(amount);
     }
 
-    public String orderList() {
-        return orderService.orderList();
+    public String getOrderList() {
+        return orderList;
     }
 }

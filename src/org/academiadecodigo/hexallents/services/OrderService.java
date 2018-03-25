@@ -18,8 +18,8 @@ public class OrderService {
     private Queue<Order> queue;
     private Order order;
     private double finalPrice;
-    private double price;
     private String itemName;
+    private double price;
 
 
     public OrderService() {
@@ -35,33 +35,27 @@ public class OrderService {
         queue.add(order);
     }
 
-    public void placeItem(int amount, ItemType itemType) {
-        order.placeItem(amount, itemType);
+
+    public double buy(ItemType itemType, int amount) {
+        return order.buy(itemType, amount);
     }
 
-    public String orderList() {
+    public String orderList(int amount) {
 
         Set<ItemType> set = order.getOrderList().keySet();
 
         StringBuilder message = new StringBuilder();
         for (ItemType itemType : set) {
 
-            for (Integer amount : order.getOrderList().values()) {
+            price = buy(itemType, amount);
 
-                if (order.getOrderList().get(itemType) == amount) {
+            itemName = itemType.getItemName();
 
-                    price = itemType.getPrice() * amount;
-
-                    finalPrice = +price;
-
-                    itemName = itemType.getItemName();
-
-                    message.append(itemName + " " + price + "\n");
-                }
-
-
-            }
+            message.append( itemName + " " + itemType.getPrice() + "\n");
         }
-        return message.toString().concat(" " + "Final price" + Double.toString(finalPrice));
+
+        finalPrice += price;
+
+        return message.toString().concat(" " + "Final price " + Double.toString(finalPrice));
     }
 }

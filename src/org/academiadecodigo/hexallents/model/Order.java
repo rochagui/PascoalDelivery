@@ -5,19 +5,23 @@ import java.util.Map;
 
 public class Order {
 
-    private Map<ItemType, Integer> orderList;
+    private Map<ItemType, Double> orderList;
     private ItemType itemType;
 
     public Order() {
         orderList = new HashMap<>();
     }
 
-    public void placeItem(int amount, ItemType itemType) {
-        orderList.put(itemType, amount);
+    public void placeItem(ItemType itemType) {
+        orderList.putIfAbsent(itemType, itemType.getPrice());
     }
 
+    public double buy(ItemType itemType, int amount){
+        placeItem(itemType);
+        return orderList.get(itemType)*amount;
+    }
 
-    public void removeAmountItem(int amount, ItemType itemType) {
+    /*public void removeAmountItem(int amount, ItemType itemType) {
         if (amount == 0) {
             return;
         }
@@ -26,12 +30,7 @@ public class Order {
         } else if (orderList.get(itemType) == amount) {
             removeItem(itemType);
         }
-    }
-
-    public Integer getItemType() {
-        return orderList.get(itemType);
-    }
-
+    }*/
 
     public void setItemType(ItemType itemType) {
         this.itemType = itemType;
@@ -41,7 +40,7 @@ public class Order {
         orderList.remove(itemType);
     }
 
-    public Map<ItemType, Integer> getOrderList() {
+    public Map<ItemType, Double> getOrderList() {
         return orderList;
     }
 }

@@ -54,7 +54,7 @@ public class OrderView extends AbstractView {
         }
 
         if (answerIndex == LeaveOptions.CHECKOUT.getUserOptions()){
-            printWriter.println(orderController.orderList());
+            printWriter.println(orderController.getOrderList());
             menuController.init();
             show();
         }

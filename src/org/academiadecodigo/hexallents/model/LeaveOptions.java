@@ -7,6 +7,7 @@ public enum LeaveOptions {
     CHECKOUT("Proceed to checkout", 5),
     BACK("Back to main menu", 6);
 
+
     String leaveOptions;
     int userOptions;
     LeaveOptions(String leaveOptions, int userOptions){
