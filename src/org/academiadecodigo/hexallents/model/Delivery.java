@@ -1,5 +1,7 @@
 package org.academiadecodigo.hexallents.model;
 
+import org.academiadecodigo.hexallents.services.OrderService;
+
 import java.util.Queue;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -13,39 +15,31 @@ import java.util.concurrent.Executors;
 public class Delivery {
 
     private boolean delivered;
-    private final Queue<Order> queue;
+    private final BQueue<Order> bqueue = new BQueue<>(2);
     private final int DELIVERYCAPACITY = 3;
     private final int DELIVERYTIME = 20000;
     private final Timer timer = new Timer();
     private ExecutorService executorService = Executors.newFixedThreadPool(3);
-    private DeliverWorker deliverWorker;
+    private OrderService orderService;
+    private int element;
 
-    public Delivery() {
-        queue = new ConcurrentLinkedQueue<>();
+
+
+    public void deliver(Order order) {
+        executorService.submit(new DeliverWorker(order));
 
     }
 
-    public void deliver() {
-        executorService.submit(deliverWorker);
-    }
+    public void deliveryOrder(Order order) {
+        bqueue.offer(order);
 
-    public void addOrder(Order order) {
-        queue.add(order);
     }
 
     public synchronized boolean isDelivered() {
         return delivered;
     }
 
-    public synchronized int checkQueue(Order orderCheck) {
-        int counter = 0;
-        for (Order order : queue) {
-            if (orderCheck != order) {
-                counter++;
-            }
-        }
-        return counter;
-    }
+
 
     private class DeliverWorker implements Runnable {
 
@@ -53,6 +47,8 @@ public class Delivery {
 
         public DeliverWorker(Order order) {
             this.order = order;
+            element++;
+            System.out.println(element);
         }
 
         @Override

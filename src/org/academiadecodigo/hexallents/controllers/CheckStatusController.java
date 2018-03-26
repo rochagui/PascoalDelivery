@@ -20,14 +20,5 @@ public class CheckStatusController extends AbstractController {
         this.menuController = menuController;
     }
 
-    public synchronized String showStatus() {
-        int queue = orderService.checkStatus();
-
-        if(queue == 0){
-            return "You´re next in the line";
-        } else if(queue == 0){
-
-        }
-        return "Your order is on the queue. \n Your position in queue:\t" + orderService.checkStatus();
-    }
 }
+
