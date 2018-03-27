@@ -47,19 +47,24 @@ public class BootStrap {
         CheckStatusView checkStatusView = new CheckStatusView();
 
 
+        checkStatusController.setOrderService(orderService);
+        checkStatusController.setOrderController(orderController);
+        checkStatusController.setMenuController(menuController);
+        orderController.setOrderService(orderService);
+
+        orderController.setView(orderView);
+        menuController.setView(menuView);
+        checkStatusController.setView(checkStatusView);
+
         orderService.setDelivery(delivery);
+
         checkStatusView.setCheckStatusController(checkStatusController);
         checkStatusView.setPrintWriter(printWriter);
-        checkStatusController.setOrderService(orderService);
-        checkStatusController.setMenuController(menuController);
-        checkStatusController.setView(checkStatusView);
         checkStatusView.setMenuController(menuController);
-        menuController.setView(menuView);
         menuView.setMenuController(menuController);
         menuView.setPrompt(prompt);
-        orderController.setView(orderView);
-        orderController.setOrderService(orderService);
-        orderController.setMenuController(menuController);
+
+
         orderView.setPrompt(prompt);
         orderView.setPrintWriter(printWriter);
         orderView.setOrderController(orderController);

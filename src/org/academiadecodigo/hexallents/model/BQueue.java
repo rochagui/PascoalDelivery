@@ -2,37 +2,42 @@ package org.academiadecodigo.hexallents.model;
 
 import java.util.LinkedList;
 
-public class BQueue<T> {
+public class BQueue<Order> {
     final private int limit;
 
-    final private LinkedList<T> linkedList;
+    final private LinkedList<Order> linkedList;
 
 
     public BQueue(int limit) {
         this.limit = limit;
-        linkedList = new LinkedList<T>();
+        linkedList = new LinkedList<Order>();
     }
 
 
-    public synchronized void offer(T data) {
+    public synchronized void offer(Order order) {
 
         while (getSize() >= limit) {
             try {
                 System.out.println("order waiting...");
-                wait();
+                wait(30000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
-
+        try {
+            wait(20000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        linkedList.offer(order);
         System.out.println("element added, list is now " + getSize());
-        linkedList.offer(data);
+
         notifyAll();
 
     }
 
 
-    public synchronized T poll() {
+    public synchronized Order poll() {
 
         while (linkedList.size() <= 0) {
             try {

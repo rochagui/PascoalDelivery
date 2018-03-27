@@ -15,7 +15,7 @@ import java.util.concurrent.Executors;
 public class Delivery {
 
     private boolean delivered;
-    private final BQueue<Order> bqueue = new BQueue<>(2);
+    private final BQueue<Order> bqueue = new BQueue<>(3);
     private final int DELIVERYCAPACITY = 3;
     private final int DELIVERYTIME = 20000;
     private final Timer timer = new Timer();
@@ -23,12 +23,6 @@ public class Delivery {
     private OrderService orderService;
     private int element;
 
-
-
-    public void deliver(Order order) {
-        executorService.submit(new DeliverWorker(order));
-
-    }
 
     public void deliveryOrder(Order order) {
         bqueue.offer(order);
@@ -41,19 +35,5 @@ public class Delivery {
 
 
 
-    private class DeliverWorker implements Runnable {
 
-        private Order order;
-
-        public DeliverWorker(Order order) {
-            this.order = order;
-            element++;
-            System.out.println(element);
-        }
-
-        @Override
-        public void run() {
-
-        }
-    }
 }

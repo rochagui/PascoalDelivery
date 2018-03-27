@@ -22,7 +22,7 @@ public class CheckStatusView extends AbstractView{
 
     @Override
     public void show() {
-        //printWriter.println(checkStatusController.showStatus());
+        printWriter.println(checkStatusController.showStatus());
         menuController.init();
     }
 

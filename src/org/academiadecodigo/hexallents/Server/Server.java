@@ -14,8 +14,6 @@ import java.util.List;
  */
 public class Server {
     private BootStrap bootStrap = new BootStrap();
-    private ServerSocket serverSocket;
-    private Socket clientSocket;
     public final static int DEFAULT_PORT = 6666;
     private List<ServerWorker> workers = Collections.synchronizedList(new ArrayList<ServerWorker>());
 
@@ -59,7 +57,7 @@ public class Server {
             while (true) {
 
                 // Block waiting for client connections
-                clientSocket = serverSocket.accept();
+                Socket clientSocket = serverSocket.accept();
                 System.out.println("Client accepted: " + clientSocket);
 
                 try {

@@ -17,13 +17,10 @@ public class OrderService {
     private Order order;
     private double finalPrice;
     private double price;
-    private BQueue<Order> orderBQueue = new BQueue<>(3);
 
 
     public synchronized void addOrder() {
-
         order = new Order();
-        orderBQueue.offer(order);
     }
 
     public void setDelivery(Delivery delivery) {
@@ -49,7 +46,6 @@ public class OrderService {
         }
 
         finalPrice += price;
-        deliver();
 
 
         return message.toString().concat(" " + "Final price " + Double.toString(finalPrice));
@@ -57,7 +53,9 @@ public class OrderService {
 
     public void deliver() {
         delivery.deliveryOrder(order);
-        delivery.deliver(order);
     }
 
+    public Order getOrder() {
+        return order;
+    }
 }

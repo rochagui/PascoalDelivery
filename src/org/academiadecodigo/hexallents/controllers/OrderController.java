@@ -8,16 +8,12 @@ import java.io.PrintWriter;
 public class OrderController extends AbstractController {
 
     private OrderService orderService;
-    private MenuController menuController;
     private String orderList;
 
     public void setOrderService(OrderService orderService) {
         this.orderService = orderService;
     }
 
-    public void setMenuController(MenuController menuController) {
-        this.menuController = menuController;
-    }
 
     @Override
     public void init() {
@@ -31,8 +27,11 @@ public class OrderController extends AbstractController {
     }
 
     public String getOrderList() {
-
         return orderList;
+    }
+
+    public void delivery(){
+        orderService.deliver();
     }
 
 

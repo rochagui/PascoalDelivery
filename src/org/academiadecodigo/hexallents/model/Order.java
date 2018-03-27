@@ -21,7 +21,7 @@ public class Order {
         return orderList.get(itemType)*amount;
     }
 
-    /*public void removeAmountItem(int amount, ItemType itemType) {
+    public void removeAmountItem(int amount, ItemType itemType) {
         if (amount == 0) {
             return;
         }
@@ -30,7 +30,7 @@ public class Order {
         } else if (orderList.get(itemType) == amount) {
             removeItem(itemType);
         }
-    }*/
+    }
 
     public void setItemType(ItemType itemType) {
         this.itemType = itemType;
