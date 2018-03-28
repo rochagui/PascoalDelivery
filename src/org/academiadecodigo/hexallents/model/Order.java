@@ -43,4 +43,8 @@ public class Order {
     public Map<ItemType, Double> getOrderList() {
         return orderList;
     }
+
+    public boolean isEmpty() {
+        return orderList.isEmpty();
+    }
 }

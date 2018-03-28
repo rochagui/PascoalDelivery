@@ -2,38 +2,58 @@ package org.academiadecodigo.hexallents.model;
 
 import org.academiadecodigo.hexallents.services.OrderService;
 
-import java.util.Queue;
-import java.util.Timer;
 import java.util.TimerTask;
-import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 /**
  * Created by codecadet on 25/03/2018.
  */
 public class Delivery {
 
-    private boolean delivered;
-    private final BQueue<Order> bqueue = new BQueue<>(3);
-    private final int DELIVERYCAPACITY = 3;
-    private final int DELIVERYTIME = 20000;
-    private final Timer timer = new Timer();
-    private ExecutorService executorService = Executors.newFixedThreadPool(3);
+    private final BQueue<Order> bqueue = new BQueue<>();
     private OrderService orderService;
-    private int element;
+    private String waitingTime = "Your order has been dispatched!";
 
 
-    public void deliveryOrder(Order order) {
+
+    public void beginOrder(Order order) {
+        bqueue.setClock(new Clock());
         bqueue.offer(order);
 
     }
 
-    public synchronized boolean isDelivered() {
-        return delivered;
+    public String getWaitingTime() {
+        return waitingTime;
     }
 
 
+    public boolean isDelivered(){
+        return bqueue.isDelivered();
+    }
 
+    public boolean isDispatched() {
+        return bqueue.isDispatched();
+    }
+
+    private class Clock extends TimerTask {
+
+        private int counter = 10;
+
+        @Override
+        public void run() {
+            waitingTime =  "You have to wait " + counter + " minutes...";
+            counter--;
+            System.out.println(waitingTime);
+            if (counter == 0) {
+                bqueue.setDelivered(true);
+                cancel();
+            }
+
+        }
+
+
+
+    }
 
 }
+
+

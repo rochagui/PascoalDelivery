@@ -10,7 +10,7 @@ public class CheckStatusController extends AbstractController {
 
     @Override
     public void init() {
-        if (orderService.getOrder() == null) {
+        if (orderService.getOrder() == null || orderService.getOrder().isEmpty()) {
             menuController.init();
         }
         super.init();
@@ -30,6 +30,18 @@ public class CheckStatusController extends AbstractController {
 
     public String showStatus() {
         return orderController.getOrderList();
+    }
+
+    public String getDeliveryFeedback(){
+        return orderService.getDelivery().getWaitingTime();
+    }
+
+    public boolean isDelivered(){
+        return orderService.isDelivered();
+    }
+
+    public boolean isDispatched() {
+        return orderService.isDispatched();
     }
 }
 

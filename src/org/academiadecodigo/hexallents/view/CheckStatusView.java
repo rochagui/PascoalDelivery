@@ -23,6 +23,14 @@ public class CheckStatusView extends AbstractView{
     @Override
     public void show() {
         printWriter.println(checkStatusController.showStatus());
+        while (!checkStatusController.isDelivered() && checkStatusController.isDispatched()){
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            printWriter.println(checkStatusController.getDeliveryFeedback());
+        }
         menuController.init();
     }
 

@@ -1,6 +1,5 @@
 package org.academiadecodigo.hexallents.services;
 
-import org.academiadecodigo.hexallents.model.BQueue;
 import org.academiadecodigo.hexallents.model.Delivery;
 import org.academiadecodigo.hexallents.model.ItemType;
 import org.academiadecodigo.hexallents.model.Order;
@@ -52,10 +51,22 @@ public class OrderService {
     }
 
     public void deliver() {
-        delivery.deliveryOrder(order);
+        delivery.beginOrder(order);
+    }
+
+    public boolean isDelivered(){
+       return delivery.isDelivered();
     }
 
     public Order getOrder() {
         return order;
+    }
+
+    public Delivery getDelivery() {
+        return delivery;
+    }
+
+    public boolean isDispatched() {
+        return delivery.isDispatched();
     }
 }
